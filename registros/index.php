@@ -157,7 +157,7 @@ function generarOpcionesTiempo() {
 <body>
 
 <?php if(!$esPantallaOficial): ?>
-    <button id="btnFullscreen" class="btn-flotante" onclick="toggleFullScreen()" title="Pantalla Completa">⛶</button>
+    <button id="btnFullscreen" class="btn-flotante" onclick="toggleFullScreen()" title="Pantalla Completa">�?/button>
 <?php endif; ?>
 
 <div class="kiosco-container">
@@ -182,7 +182,7 @@ function generarOpcionesTiempo() {
             <?php if($modoTecnicoID === ""): ?>
             <div class="bloque-qr" id="bloqueQrInicio">
                 <p style="color: #000; font-size: 18px; font-weight: 900; margin: 0; text-transform: uppercase;">📲 Usa tu celular escaneando este QR</p>
-                <img src="QR.jpeg" alt="Código QR de Registro">
+                <img src="QR.png" alt="Código QR de Registro">
             </div>
             <?php endif; ?>
         <?php endif; ?>
@@ -255,7 +255,7 @@ function generarOpcionesTiempo() {
             <button class="btn btn-info" id="btnEditarAp" style="width:100%; margin-top:10px; display:none;" onclick="iniciarEdicionAp()">✏️ Editar Detalles del AP</button>
             <button class="btn btn-entrada" id="btnRegistrarRecepcion" style="width:100%; margin-top:20px; display:none;" onclick="iniciarFlujoPrestamo('recepcion')">1️⃣ Registrar Recepción</button>
             <button class="btn btn-warning" id="btnRegistrarDevolucion" style="width:100%; margin-top:20px; display:none;" onclick="iniciarFlujoPrestamo('devolucion')">2️⃣ Registrar Devolución</button>
-            <p id="msgApCompletado" style="display:none; color: #155724; background: #d4edda; padding: 10px; border: 2px solid #c3e6cb; border-radius: 6px; font-weight: 900; text-align: center; margin-top: 20px;">✅ ESTA ACTA DE PRÉSTAMO YA ESTÁ COMPLETADA.</p>
+            <p id="msgApCompletado" style="display:none; color: #155724; background: #d4edda; padding: 10px; border: 2px solid #c3e6cb; border-radius: 6px; font-weight: 900; text-align: center; margin-top: 20px;">�?ESTA ACTA DE PRÉSTAMO YA ESTÁ COMPLETADA.</p>
         </div>
         <button class="btn btn-atras" onclick="cancelar()">[ Atrás ] Volver al inicio</button>
     </div>
@@ -401,7 +401,7 @@ function generarOpcionesTiempo() {
             clearTimeout(timeoutNode);
             clearTimeout(timerDemora);
             console.error("Error del servidor/red:", err);
-            mostrarMensaje("❌ Falla de Red o Servidor inactivo.", "msg-error");
+            mostrarMensaje("�?Falla de Red o Servidor inactivo.", "msg-error");
             document.getElementById('btnMensajeVolver').style.display = 'inline-block';
             document.getElementById('btnReintentar').style.display = 'inline-block';
             document.getElementById('btnReintentar').onclick = () => {
@@ -488,7 +488,7 @@ function generarOpcionesTiempo() {
                     markdownFromHtml = markdownFromHtml.replace(/\n{3,}/g, '\n\n');
 
                     cm.replaceSelection(markdownFromHtml);
-                    mostrarMensaje("✅ Conversión completada.", "msg-success");
+                    mostrarMensaje("�?Conversión completada.", "msg-success");
                     setTimeout(() => mostrarMensaje("", ""), 2500);
                 },
                 className: "fa-solid fa-file-code",
@@ -536,14 +536,14 @@ function generarOpcionesTiempo() {
     function abrirMenuPrestamos() {
         document.getElementById('botones-accion').style.display = 'none'; document.getElementById('menuPrestamos').style.display = 'block';
         document.getElementById('subtitulo').innerText = "GESTIÓN DE PRÉSTAMOS (INVENTARIO)"; document.getElementById('subtitulo').style.backgroundColor = "#007bff"; document.getElementById('subtitulo').style.color = "#fff"; document.getElementById('subtitulo').style.borderColor = "#0056b3";
-        mostrarMensaje("⏳ Descargando base de datos...", "msg-info");
+        mostrarMensaje("�?Descargando base de datos...", "msg-info");
         let select = document.getElementById('selectAp'); select.innerHTML = '<option value="" disabled selected>CARGANDO DATOS...</option>'; select.disabled = true;
         document.getElementById('contenedorInfoAp').style.display = 'none'; document.getElementById('contenedorNuevoAp').style.display = 'none';
 
         fetchResiliente({ accion: 'obtener_prestamos' }).then(data => {
             mostrarMensaje("", ""); select.disabled = false;
             if(data.status === "ok") { listaPrestamosActivos = data.prestamos; actualizarDesplegablePrestamos(); } 
-            else { mostrarMensaje("❌ Error al cargar préstamos", "msg-error"); }
+            else { mostrarMensaje("�?Error al cargar préstamos", "msg-error"); }
         });
     }
 
@@ -552,7 +552,7 @@ function generarOpcionesTiempo() {
         for(let i = listaPrestamosActivos.length - 1; i >= 0; i--) {
             let ap = listaPrestamosActivos[i]; let estado = (ap.idRecepcion !== "" && ap.idDevolucion !== "") ? " [COMPLETADO]" : ""; select.innerHTML += `<option value="${ap.apId}">${ap.apId}${estado}</option>`;
         }
-        select.innerHTML += '<option value="NUEVO_AP" style="font-weight:900; color:#007bff;">➕ AGREGAR NUEVO AP ID...</option>';
+        select.innerHTML += '<option value="NUEVO_AP" style="font-weight:900; color:#007bff;">�?AGREGAR NUEVO AP ID...</option>';
         if(seleccionarId !== "") { select.value = seleccionarId; cambioSeleccionAp(); }
     }
 
@@ -593,24 +593,24 @@ function generarOpcionesTiempo() {
         let nuevoId = document.getElementById('nuevoApId').value.trim(); let nuevaInfo = easymde.value().trim();
         if(nuevoId === "" || nuevaInfo === "") { alert("Completa el ID y la información."); return; }
         if(listaPrestamosActivos.some(p => p.apId === nuevoId)) { alert("Este AP ID ya existe."); return; }
-        mostrarMensaje("⏳ Guardando nuevo AP...", "msg-info");
+        mostrarMensaje("�?Guardando nuevo AP...", "msg-info");
         fetchResiliente({ accion: 'crear_ap', apId: nuevoId, apInfo: nuevaInfo }).then(data => {
             if(data.status === "ok") {
-                mostrarMensaje("✅ AP Guardado. Actualizando lista...", "msg-success");
+                mostrarMensaje("�?AP Guardado. Actualizando lista...", "msg-success");
                 listaPrestamosActivos.push({ apId: nuevoId, apInfo: nuevaInfo, idRecepcion: "", idDevolucion: "" }); actualizarDesplegablePrestamos(nuevoId);
-            } else { mostrarMensaje("❌ Error: " + data.msg, "msg-error"); }
+            } else { mostrarMensaje("�?Error: " + data.msg, "msg-error"); }
         });
     }
 
     function guardarEdicionAp() {
         let infoEditada = easymde.value().trim(); if(infoEditada === "") { alert("La información no puede estar vacía."); return; }
-        mostrarMensaje("⏳ Guardando cambios...", "msg-info");
+        mostrarMensaje("�?Guardando cambios...", "msg-info");
         fetchResiliente({ accion: 'editar_ap', apId: apIdSeleccionado, apInfo: infoEditada }).then(data => {
             if(data.status === "ok") {
-                mostrarMensaje("✅ Cambios guardados exitosamente.", "msg-success");
+                mostrarMensaje("�?Cambios guardados exitosamente.", "msg-success");
                 let apData = listaPrestamosActivos.find(p => p.apId === apIdSeleccionado); apData.apInfo = infoEditada;
                 document.getElementById('contenedorNuevoAp').style.display = 'none'; cambioSeleccionAp(); 
-            } else { mostrarMensaje("❌ Error: " + data.msg, "msg-error"); }
+            } else { mostrarMensaje("�?Error: " + data.msg, "msg-error"); }
         });
     }
 
@@ -618,10 +618,10 @@ function generarOpcionesTiempo() {
     function iniciarValidacionTecnico(accionDestino) { if (tecnicoVerificado) { accionActual = accionDestino; procesarEscaneoTecnicoAutenticado(MODO_TECNICO_ID); } else { iniciarEscaneo(accionDestino); } }
 
     function procesarEscaneoTecnicoAutenticado(scanResult) {
-        tecnicoIdActual = scanResult; document.getElementById('codigoManual').value = ""; mostrarMensaje("⏳ Procesando autorización...", "msg-info");
+        tecnicoIdActual = scanResult; document.getElementById('codigoManual').value = ""; mostrarMensaje("�?Procesando autorización...", "msg-info");
         fetchResiliente({ accion: 'validar_tecnico', tecnicoId: tecnicoIdActual }).then(data => {
             if(data.status === "ok") {
-                detenerEscaneo(); mostrarMensaje(`✅ Técnico autorizado: ${data.nombre}.`, "msg-success");
+                detenerEscaneo(); mostrarMensaje(`�?Técnico autorizado: ${data.nombre}.`, "msg-success");
                 
                 if (accionActual === 'prestamo_tecnico') {
                     ejecutarPeticion({ 
@@ -638,7 +638,7 @@ function generarOpcionesTiempo() {
                     }, 1000);
                 }
             } else { 
-                mostrarMensaje(`❌ Error: ${data.msg}. Intenta de nuevo.`, "msg-error"); 
+                mostrarMensaje(`�?Error: ${data.msg}. Intenta de nuevo.`, "msg-error"); 
                 if(tecnicoVerificado) resetTimer = setTimeout(() => { cancelar(); }, 4000);
             }
         });
@@ -666,7 +666,7 @@ function generarOpcionesTiempo() {
         if (!ES_PANTALLA_OFICIAL) {
             let pinIngresado = document.getElementById('inputPin').value.trim().toUpperCase();
             if (pinIngresado === "") { alert("Por favor, ingresa el PIN."); return; }
-            if (pinIngresado !== generarPinDelDia()) { mostrarMensaje("❌ PIN incorrecto.", "msg-error"); return; }
+            if (pinIngresado !== generarPinDelDia()) { mostrarMensaje("�?PIN incorrecto.", "msg-error"); return; }
         }
         datosEntrada.tiempoEstimado = document.getElementById('inputTiempoEstimado').value;
         if (!datosEntrada.tiempoEstimado) { alert("Por favor, indica cuánto tiempo te quedarás."); return; }
@@ -712,14 +712,14 @@ function generarOpcionesTiempo() {
     }
 
     function forzarCapturaFrame() {
-        let video = document.querySelector('#reader video'); if(!video) return; mostrarMensaje("⏳ Analizando fotograma actual...", "msg-info");
+        let video = document.querySelector('#reader video'); if(!video) return; mostrarMensaje("�?Analizando fotograma actual...", "msg-info");
         let canvas = document.createElement('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight;
         let ctx = canvas.getContext('2d'); ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         canvas.toBlob(function(blob) {
             let file = new File([blob], "captura.jpg", { type: "image/jpeg" });
             if(!hiddenQrScanner) hiddenQrScanner = new Html5Qrcode("hidden-reader");
-            hiddenQrScanner.scanFile(file, true).then(decodedText => { mostrarMensaje("✅ QR detectado.", "msg-success"); procesarEscaneo(decodedText);
-            }).catch(err => { mostrarMensaje("❌ El QR sigue sin leerse. Limpia el lente y enfoca mejor.", "msg-error"); });
+            hiddenQrScanner.scanFile(file, true).then(decodedText => { mostrarMensaje("�?QR detectado.", "msg-success"); procesarEscaneo(decodedText);
+            }).catch(err => { mostrarMensaje("�?El QR sigue sin leerse. Limpia el lente y enfoca mejor.", "msg-error"); });
         }, 'image/jpeg');
     }
 
@@ -732,11 +732,11 @@ function generarOpcionesTiempo() {
         } else if (accionActual === 'prestamo_tecnico' || accionActual === 'autorizar_nuevo_ap') {
             procesarEscaneoTecnicoAutenticado(scanResult);
         } else {
-            usuarioIdActual = scanResult; mostrarMensaje("⏳ Buscando perfil...", "msg-info");
+            usuarioIdActual = scanResult; mostrarMensaje("�?Buscando perfil...", "msg-info");
             
             fetchResiliente({ accion: 'verificar', usuarioId: usuarioIdActual }).then(respuesta => {
                 mostrarMensaje("", ""); 
-                if (respuesta.status === "error") { mostrarMensaje("❌ Error del servidor: " + respuesta.msg, "msg-error"); resetTimer = setTimeout(() => { cancelar(); }, 6000); return; }
+                if (respuesta.status === "error") { mostrarMensaje("�?Error del servidor: " + respuesta.msg, "msg-error"); resetTimer = setTimeout(() => { cancelar(); }, 6000); return; }
                 datosUsuarioCache = respuesta;
                 if (respuesta.existe) { 
                     if (accionActual === 'editar_perfil') {
@@ -747,7 +747,7 @@ function generarOpcionesTiempo() {
                 } 
                 else {
                     if (accionActual === 'editar_perfil') {
-                        mostrarMensaje("❌ No se encontró tu perfil. Debes registrarte primero al marcar Entrada.", "msg-error");
+                        mostrarMensaje("�?No se encontró tu perfil. Debes registrarte primero al marcar Entrada.", "msg-error");
                         resetTimer = setTimeout(() => { cancelar(); }, 5000);
                     } else {
                         esActualizacion = false; document.getElementById('tituloRegistro').innerText = "¡HOLA! ES TU PRIMERA VEZ AQUÍ."; document.getElementById('btnGuardarUsuario').innerText = (accionActual === 'prestamo_usuario') ? "Guardar Información y Continuar" : "Guardar y Registrar Entrada"; document.getElementById('registroNuevoUsuario').style.display = 'block';
@@ -829,18 +829,18 @@ function generarOpcionesTiempo() {
         document.getElementById('registroNuevoUsuario').style.display = 'none';
         
         if (accionActual === 'prestamo_usuario' || accionActual === 'editar_perfil') {
-            mostrarMensaje("⏳ Guardando perfil...", "msg-info");
+            mostrarMensaje("�?Guardando perfil...", "msg-info");
             fetchResiliente({ accion: 'registrar_solo_usuario', usuarioId: usuarioIdActual, nombre: nombre, area: area, rol: rol, esNuevo: !esActualizacion, actualizarUsuario: esActualizacion })
             .then(data => { 
                 if(data.status === "ok") { 
                     if (accionActual === 'prestamo_usuario') {
                         mostrarMensaje("", ""); iniciarValidacionTecnico('prestamo_tecnico'); 
                     } else {
-                        mostrarMensaje("✅ Información personal actualizada exitosamente.", "msg-success"); 
+                        mostrarMensaje("�?Información personal actualizada exitosamente.", "msg-success"); 
                         resetTimer = setTimeout(() => { cancelar(); }, 3000);
                     }
                 } else { 
-                    mostrarMensaje("❌ Error: " + data.msg, "msg-error"); 
+                    mostrarMensaje("�?Error: " + data.msg, "msg-error"); 
                 } 
             });
         } else {
@@ -849,12 +849,12 @@ function generarOpcionesTiempo() {
     }
 
     function ejecutarPeticion(payload) {
-        payload.clientIp = IP_COMBINADA; mostrarMensaje("⏳ Guardando...", "msg-info"); document.getElementById('btnMensajeVolver').style.display = 'none'; if(resetTimer) clearTimeout(resetTimer);
+        payload.clientIp = IP_COMBINADA; mostrarMensaje("�?Guardando...", "msg-info"); document.getElementById('btnMensajeVolver').style.display = 'none'; if(resetTimer) clearTimeout(resetTimer);
         fetchResiliente(payload).then(data => {
             if(data.status === "ok") {
-                mostrarMensaje(`✅ ¡ÉXITO! REGISTRO COMPLETADO.`, "msg-success"); resetTimer = setTimeout(() => { cancelar(); }, 4000);
+                mostrarMensaje(`�?¡ÉXITO! REGISTRO COMPLETADO.`, "msg-success"); resetTimer = setTimeout(() => { cancelar(); }, 4000);
             } else { 
-                mostrarMensaje(`❌ ERROR: ${data.msg}`, "msg-error"); document.getElementById('btnMensajeVolver').style.display = 'inline-block'; resetTimer = setTimeout(() => { cancelar(); }, 6000);
+                mostrarMensaje(`�?ERROR: ${data.msg}`, "msg-error"); document.getElementById('btnMensajeVolver').style.display = 'inline-block'; resetTimer = setTimeout(() => { cancelar(); }, 6000);
             }
         });
     }
