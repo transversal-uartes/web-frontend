@@ -37,7 +37,7 @@ $protocolo = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" 
 $urlBase = rtrim($protocolo . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']), '/\\');
 
 // Construcción de la URL absoluta requerida estrictamente por redes sociales
-$ogImagenRelativa = getenv('OG_IMAGEN')         ?: $logoDptoOscuro; 
+$ogImagenRelativa = getenv('OG_IMAGEN')         ?: $logoDptoClaro; 
 $ogImagenAbsoluta = $urlBase . '/' . ltrim($ogImagenRelativa, '/');
 
 /* ==========================================================================
