@@ -26,7 +26,7 @@ $META_DESC = "Sistema interactivo para la reserva de laboratorios y espacios adm
 $META_IMAGEN = $urlBase . $LOGO_LIGHT; // Puedes cambiar esto por una URL de un banner panorámico (ideal 1200x630)
 
 // API Key
-$GOOGLE_API_KEY = "AIzaSyDRAcHO33qXh61-Zq--_Y7M15Q8e1HqVH0"; 
+$GOOGLE_API_KEY = getenv('GOOGLE_API_KEY'); 
 
 // ==========================================
 // MATRIZ DINÁMICA DE LABORATORIOS
